@@ -1,4 +1,4 @@
-.PHONY: up down status logs check proto
+.PHONY: up down status logs check proto run-inventory run-order run-worker
 
 COMPOSE_FILE = infra/docker-compose.yml
 
@@ -16,6 +16,15 @@ logs:
 
 proto:
 	./scripts/gen-proto.sh
+
+run-inventory:
+	go run ./cmd/inventory
+
+run-order:
+	go run ./cmd/order
+
+run-worker:
+	go run ./cmd/worker
 
 check:
 	@echo "Checking Postgres..."
