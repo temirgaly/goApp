@@ -16,13 +16,14 @@ import (
 	"github.com/orderpulse/internal/order/rabbitmq"
 	"github.com/orderpulse/internal/order/repository"
 	ordersvc "github.com/orderpulse/internal/order/service"
+	"github.com/orderpulse/pkg/logger"
 	orderv1 "github.com/orderpulse/proto/order/v1"
 )
 
 var Module = fx.Options(
 	fx.Provide(
 		config.Load,
-		zap.NewProduction,
+		ProvideLogger,
 		repository.NewPostgresRepository,
 		client.NewInventoryClient,
 		kafka.NewKafkaProducer,
@@ -32,6 +33,11 @@ var Module = fx.Options(
 	),
 	fx.Invoke(RegisterGRPCServer),
 )
+
+func ProvideLogger() (*zap.Logger, error) {
+	log, _, err := logger.NewLogger("order-service")
+	return log, err
+}
 
 func RegisterGRPCServer(
 	lc fx.Lifecycle,

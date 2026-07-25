@@ -7,23 +7,23 @@ Configure centralized log aggregation for all Go microservices (**Inventory**, *
 
 ## 📋 Task Checklist
 
-- [ ] **1. Configure Zap Log Exporter / Loki Driver**
+- [x] **1. Configure Zap Log Exporter / Loki Driver**
   - Option A (Direct Push): Configure a Zap log sink / HTTP hook in Go services to push JSON log streams directly to `http://localhost:3100/loki/api/v1/push`.
   - Option B (Promtail / Docker Driver): Ensure Docker logging driver or Promtail scrapes service container logs formatted in standard JSON.
 
-- [ ] **2. Standardize Trace & Context Fields**
+- [x] **2. Standardize Trace & Context Fields**
   - Ensure all Go services wrap loggers with common fields:
     - `service_name` (e.g., `inventory-service`, `order-service`, `worker-service`)
     - `environment` (`development`)
     - `trace_id` (propagated across gRPC metadata and messaging headers)
     - `order_id` (domain tracing tag)
 
-- [ ] **3. Configure Grafana Loki Datasource**
+- [x] **3. Configure Grafana Loki Datasource**
   - Access Grafana UI at `http://localhost:3000` (Login: `admin` / `admin`).
   - Add Loki datasource pointing to `http://loki:3100`.
   - Save & test connection to verify active stream ingestion.
 
-- [ ] **4. Create OrderPulse Log Dashboard in Grafana**
+- [x] **4. Create OrderPulse Log Dashboard in Grafana**
   - Build a custom Grafana dashboard titled **"OrderPulse — Service Logs & Traces"**.
   - Add Log Panel querying by service: `{service_name=~"order-service|inventory-service|worker-service"}`.
   - Configure LogQL derived fields to parse `trace_id` and `order_id` from JSON payloads.

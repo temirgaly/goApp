@@ -13,13 +13,14 @@ import (
 	inventorygrpc "github.com/orderpulse/internal/inventory/grpc"
 	"github.com/orderpulse/internal/inventory/repository"
 	inventorysvc "github.com/orderpulse/internal/inventory/service"
+	"github.com/orderpulse/pkg/logger"
 	inventoryv1 "github.com/orderpulse/proto/inventory/v1"
 )
 
 var Module = fx.Options(
 	fx.Provide(
 		config.Load,
-		zap.NewProduction,
+		ProvideLogger,
 		repository.NewPostgresRepository,
 		repository.NewRedisRepository,
 		inventorysvc.NewInventoryService,
@@ -27,6 +28,11 @@ var Module = fx.Options(
 	),
 	fx.Invoke(RegisterGRPCServer),
 )
+
+func ProvideLogger() (*zap.Logger, error) {
+	log, _, err := logger.NewLogger("inventory-service")
+	return log, err
+}
 
 func RegisterGRPCServer(
 	lc fx.Lifecycle,

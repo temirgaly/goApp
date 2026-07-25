@@ -8,16 +8,22 @@ import (
 
 	"github.com/orderpulse/internal/worker/config"
 	"github.com/orderpulse/internal/worker/consumer"
+	"github.com/orderpulse/pkg/logger"
 )
 
 var Module = fx.Options(
 	fx.Provide(
 		config.Load,
-		zap.NewProduction,
+		ProvideLogger,
 		consumer.NewInvoiceConsumer,
 	),
 	fx.Invoke(RegisterWorkerConsumer),
 )
+
+func ProvideLogger() (*zap.Logger, error) {
+	log, _, err := logger.NewLogger("worker-service")
+	return log, err
+}
 
 func RegisterWorkerConsumer(
 	lc fx.Lifecycle,
