@@ -1,0 +1,25 @@
+# Environment variables
+.env
+*.env.local
+
+# Docker volumes and data directories
+postgres_data/
+redis_data/
+tmp/
+logs/
+
+# Go build artifacts & binaries
+*.o
+*.a
+*.so
+*.exe
+*.test
+*.out
+bin/
+dist/
+
+# IDE and OS files
+.DS_Store
+.idea/
+.vscode/
+*.swp

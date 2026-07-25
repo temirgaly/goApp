@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package inventory.v1;
+
+option go_package = "github.com/orderpulse/proto/inventory/v1;inventoryv1";
+
+service InventoryService {
+  rpc CheckStock (CheckStockRequest) returns (CheckStockResponse);
+  rpc ReserveStock (ReserveStockRequest) returns (ReserveStockResponse);
+}
+
+message CheckStockRequest {
+  string product_id = 1;
+  int32 quantity = 2;
+}
+
+message CheckStockResponse {
+  bool is_available = 1;
+  int32 available_quantity = 2;
+  double price = 3;
+}
+
+message ReserveStockRequest {
+  string order_id = 1;
+  string product_id = 2;
+  int32 quantity = 3;
+}
+
+message ReserveStockResponse {
+  bool success = 1;
+  string message = 2;
+}
