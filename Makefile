@@ -1,4 +1,4 @@
-.PHONY: up down status logs check proto run-inventory run-order run-worker check-loki
+.PHONY: up down status logs check proto run-inventory run-order run-worker run-frontend check-loki
 
 COMPOSE_FILE = infra/docker-compose.yml
 
@@ -25,6 +25,9 @@ run-order:
 
 run-worker:
 	go run ./cmd/worker
+
+run-frontend:
+	cd frontend && npm run dev
 
 check-loki:
 	@echo "Checking Loki ready status:"
