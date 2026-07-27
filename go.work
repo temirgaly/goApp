@@ -1,0 +1,13 @@
+go 1.26.5
+
+// OrderPulse is a polyglot monorepo. The Go side is split into two modules:
+//
+//	proto/   - language-neutral gRPC contract + generated Go stubs.
+//	           Also read at runtime by the Next.js BFF via @grpc/proto-loader.
+//	backend/ - the three microservices that implement that contract.
+//
+// This workspace lets `go build ./...` from the repo root resolve both.
+use (
+	./backend
+	./proto
+)
